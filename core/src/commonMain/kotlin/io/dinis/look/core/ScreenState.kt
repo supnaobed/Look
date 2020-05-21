@@ -8,7 +8,7 @@ package io.dinis.look.core
  */
 sealed class ScreenState
 
- class ScreenLoading: ScreenState()
+object ScreenLoading : ScreenState()
 
 data class ScreenError(val message: String): ScreenState()
 

@@ -12,19 +12,17 @@ import androidx.core.view.isVisible
 import io.dinis.look.core.Repo
 import io.dinis.look.core.ScreenError
 import io.dinis.look.core.Storage
-import io.dinis.look.core.createApplicationScreenMessage
-import kotlinx.android.synthetic.main.activity_main.view.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var repo: Repo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         sharedPreferences = getSharedPreferences("look", Context.MODE_PRIVATE)
-        val repo = Repo(storage = simpleStorage)
+        repo = Repo(storage = simpleStorage)
         val btn = findViewById<Button>(R.id.btn)
         btn.visibility = View.GONE
         repo.screenState(result = {
@@ -70,6 +68,12 @@ class MainActivity : AppCompatActivity() {
             sharedPreferences.edit().putStringSet(key, arrayList.toSet()).apply()
         }
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        repo.stop()
+    }
+
 }
 
 

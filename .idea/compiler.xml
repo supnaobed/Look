@@ -4,6 +4,12 @@
     <bytecodeTargetLevel>
       <module name="core_androidMain" target="1.6" />
       <module name="core_androidTest" target="1.6" />
+      <module name="core_jvmMain" target="1.6" />
+      <module name="core_jvmTest" target="1.6" />
+      <module name="sec_androidMain" target="1.6" />
+      <module name="sec_androidTest" target="1.6" />
+      <module name="sec_jvmMain" target="1.6" />
+      <module name="sec_jvmTest" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>

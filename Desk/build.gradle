@@ -1,0 +1,13 @@
+apply plugin: 'application'
+apply plugin: 'kotlin'
+apply plugin: 'java'
+
+
+application {
+    mainClassName = "io.dinis.look.App"
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib"
+    implementation project(':core')
+}

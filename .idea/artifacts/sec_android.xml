@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="sec-android">
+    <output-path>$PROJECT_DIR$/sec/build/libs</output-path>
+    <root id="archive" name="sec-android.jar">
+      <element id="module-output" name="sec_androidMain" />
+    </root>
+  </artifact>
+</component>

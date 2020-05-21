@@ -2,12 +2,9 @@ package io.dinis.look.core
 
 
 import io.ktor.client.statement.HttpResponse
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BroadcastChannel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 
@@ -22,12 +19,14 @@ val json = defaultSerializer()
 class Repo(storage: Storage) {
 
     var api: Api = Api(client(storage))
+    val job = SupervisorJob()
+
 
     @ExperimentalCoroutinesApi
     private val retryChannel = BroadcastChannel<Unit>(10)
 
     fun screenState(result: (ScreenState) -> Unit){
-        GlobalScope.launch {
+        CoroutineScope(Dispatchers.Default + job).launch {
             observeState().collect {
                 result(it)
             }
@@ -35,7 +34,7 @@ class Repo(storage: Storage) {
     }
 
     public fun retry() {
-        GlobalScope.launch {
+        CoroutineScope(Dispatchers.Default + job).launch {
             retryChannel.send(Unit)
         }
     }
@@ -47,7 +46,7 @@ class Repo(storage: Storage) {
             emit(ScreenShowTitle(getProfile()!!))
         }.catch {
             val code = generateCode()
-            emit(ScreenLoading())
+            emit(ScreenLoading)
             emit(ScreenShowCode(code))
             emit(newDevice(code))
         }
@@ -73,7 +72,7 @@ class Repo(storage: Storage) {
     }
 
     private fun generateCode(): String {
-        return Random.nextInt(99999, 999999).toString()
+        return Random.nextInt(100000, 999999).toString()
     }
 
     private suspend fun sendCode(code: String) {
@@ -92,6 +91,10 @@ class Repo(storage: Storage) {
         return api.ping()
     }
 
+
+    public fun stop(){
+        job.cancel()
+    }
 }
 
 

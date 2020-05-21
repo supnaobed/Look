@@ -11,11 +11,6 @@ import io.ktor.client.features.json.JsonSerializer
  */
 
 
-expect fun platformName(): String
-
-fun createApplicationScreenMessage() : String {
-    return "Kotlin Rocks on ${platformName()}"
-}
 
 expect fun defaultSerializer(): JsonSerializer
 

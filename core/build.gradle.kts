@@ -1,7 +1,6 @@
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization") version "1.3.70"
-
 }
 
 
@@ -10,7 +9,10 @@ kotlin {
 
     val kotlinxSerializationVersion = "0.12.0"
 
-    jvm("android")
+
+    jvm {
+        withJava()
+    }
 
     sourceSets["commonMain"].dependencies {
         implementation("io.ktor:ktor-client-core:$ktorVersion")
@@ -23,7 +25,7 @@ kotlin {
         implementation("io.ktor:ktor-client-logging-jvm:$ktorVersion")
     }
 
-    sourceSets["androidMain"].dependencies {
+    sourceSets["jvmMain"].dependencies {
         implementation("org.jetbrains.kotlin:kotlin-stdlib")
         implementation("io.ktor:ktor-client-json-jvm:$ktorVersion")
         implementation("io.ktor:ktor-client-gson:$ktorVersion")
@@ -33,4 +35,6 @@ kotlin {
         implementation("org.slf4j:slf4j-simple:1.7.26")
         implementation("org.jetbrains.kotlinx:kotlinx-serialization-runtime:$kotlinxSerializationVersion")
     }
+
+
 }
